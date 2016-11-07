@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from checker.views import IndexView, PalindromeDetailView
+from checker.views import IndexView, PalindromeDetailView, PalindromeCreateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', IndexView.as_view(), name="index_view"),
-    url(r'^palindrome/(?P<pk>\d+)$', PalindromeDetailView.as_view(), name="palindrome_detail_view")
+    url(r'^palindrome/(?P<pk>\d+)$', PalindromeDetailView.as_view(), name="palindrome_detail_view"),
+    url(r'^create_palindrome/$', PalindromeCreateView.as_view(), name="palindrome_create_view")
 ]
