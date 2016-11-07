@@ -38,8 +38,8 @@ class IndexView(TemplateView):
                 palindrome = Palindrome.objects.get(text=text)
                 return HttpResponseRedirect(reverse("palindrome_detail_view", args=[palindrome.id]))
             except ObjectDoesNotExist:
-                return HttpResponseRedirect("/")
                 #  crete the palendrome in the db
+                return HttpResponseRedirect("create_palindrome")
         else:
             return HttpResponseRedirect("/")
 
