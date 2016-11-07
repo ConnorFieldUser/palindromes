@@ -9,6 +9,8 @@ from django.http import HttpResponseRedirect
 
 from django.urls import reverse
 
+from django.core.exceptions import ObjectDoesNotExist
+
 
 # Create your views here.
 def pal(string):
@@ -32,9 +34,12 @@ class IndexView(TemplateView):
         pal_test = pal(text)
         print(pal_test)
         if pal_test:
-            palindrome = Palindrome.objects.get(text=text)
-            print(palindrome)
-            return HttpResponseRedirect(reverse("palindrome_detail_view", args=[palindrome.id]))
+            try:
+                palindrome = Palindrome.objects.get(text=text)
+                return HttpResponseRedirect(reverse("palindrome_detail_view", args=[palindrome.id]))
+            except ObjectDoesNotExist:
+                return HttpResponseRedirect("/")
+                #  crete the palendrome in the db
         else:
             return HttpResponseRedirect("/")
 
