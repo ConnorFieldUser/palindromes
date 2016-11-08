@@ -23,6 +23,8 @@ def pal(string):
         if forwards == backwards:
             return True
         else:
+            print(forwards)
+            print(backwards)
             return False
 
 
