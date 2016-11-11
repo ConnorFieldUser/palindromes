@@ -16,16 +16,19 @@ from django.core.exceptions import ObjectDoesNotExist
 def pal(string):
     forwards = str(string.lower())
     backwards = str(string[::-1].lower())
-    banned = ', :!.?'
+    banned = ', :!.a'
     for thingy in banned:
         forwards = forwards.replace(thingy, '')
+        # print(new_f)
         backwards = backwards.replace(thingy, '')
-        if forwards == backwards:
-            return True
-        else:
-            print(forwards)
-            print(backwards)
-            return False
+        # print(new_b)
+
+    if forwards == backwards:
+        return True
+    else:
+        # print(forwards)
+        # print(backwards)
+        return False
 
 
 class IndexView(TemplateView):
@@ -34,7 +37,7 @@ class IndexView(TemplateView):
     def post(self, request):
         text = request.POST.get("text")
         pal_test = pal(text)
-        print(pal_test)
+        # print(pal_test)
         if pal_test:
             try:
                 palindrome = Palindrome.objects.get(text=text)
