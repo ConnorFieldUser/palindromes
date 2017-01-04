@@ -46,7 +46,7 @@ class IndexView(TemplateView):
                 #  crete the palendrome in the db
                 return HttpResponseRedirect("create_palindrome")
         else:
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("fail")
 
 
 class PalindromeDetailView(DetailView):
@@ -57,3 +57,21 @@ class PalindromeCreateView(CreateView):
     model = Palindrome
     fields = ['text']
     success_url = "/"
+
+
+class FailView(TemplateView):
+    template_name = "fail.html"
+
+    def post(self, request):
+        text = request.POST.get("text")
+        pal_test = pal(text)
+        # print(pal_test)
+        if pal_test:
+            try:
+                palindrome = Palindrome.objects.get(text=text)
+                return HttpResponseRedirect(reverse("palindrome_detail_view", args=[palindrome.id]))
+            except ObjectDoesNotExist:
+                #  crete the palendrome in the db
+                return HttpResponseRedirect("create_palindrome")
+        else:
+            return HttpResponseRedirect("fail")
